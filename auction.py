@@ -13,7 +13,8 @@ if __name__=="__main__":
         productAddress = ''
         size = '均码'
         color = '黑色'
-        
+ 	
+	#Login        
         args = {
                 'TPL_username':userName,
                 'TPL_password':password,
@@ -63,11 +64,9 @@ if __name__=="__main__":
         request.add_header("Origin", "https://login.taobao.com")
            
         response = urllib2.urlopen(request, encoded_args)
-        # already get the cookie        
 
         #Start auction.
-        
-        #Get auction page.
+        #Get auction page source code.
         req = urllib2.Request(productAddress)
         r = urllib2.urlopen(req)
         productPage = r.read()        
@@ -78,7 +77,6 @@ if __name__=="__main__":
         orderAddress = pageParser.getProductActionAddress()
 
         #TODO Skuid/questionAnswer
-
         
         #Get productFormContent productProperties productSkuMap && productSkuInfomation
         productFormContent = pageParser.getProductFormContent()
@@ -87,12 +85,12 @@ if __name__=="__main__":
         specItemList = GetProSpecItemList(productPage)
 
         #TODO Get the specific skuid and skuinfo by size, color and ...
-        #But u know what, I find that skuinfo will never be used. What the hell!
+        #Guess what, I find that skuinfo will never be used. What the hell!
 
-        #Set PostData
+        #Set product post data
         postData = GeneratePostData(productFormContent, specItemList, productProperties[size], productProperties[color])
         
-        #Get order page.
+        #Get order page source code.
         reqBuy = urllib2.Request(orderAddress)
         
         reqBuy.add_header('User-agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.861.0 Safari/535.2')
@@ -104,10 +102,12 @@ if __name__=="__main__":
         respBuy = urllib2.urlopen(reqBuy, postData)
         orderPage = respBuy.read()
 
-        #Submit Final Order
+        #Submit final order
         orderPageParser = OrderPageParser()
         orderPageParser.feed(orderPage)
         submitAddress = orderPageParser.getOrderActionAddress()
+
+	#Set order post data
         postData = orderPageParser.getOrderPostData()
 
         reqOrder = urllib2.Request(submitAddress)
