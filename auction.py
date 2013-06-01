@@ -6,7 +6,6 @@ import cookielib
 
 
 if __name__=="__main__":
-        cj = cookielib.CookieJar()
 
         userName = ''
         password = ''
@@ -51,6 +50,7 @@ if __name__=="__main__":
                 'gvfdcre':'',
                 'from_encoding':''}
         encoded_args = urllib.urlencode(args)
+        cj = cookielib.CookieJar()
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         opener.addheaders = [('User-agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.861.0 Safari/535.2')]
         urllib2.install_opener(opener)

@@ -160,6 +160,7 @@ class PageParser(SGMLParser):
 
 def GeneratePostData(productInputDict, specItemList, sizeID, colorID):
         postData = ''
+	skuId = ''
         itemID = ';' + sizeID + ';' + colorID + ';'
         for item in specItemList:
                 if item.id == itemID:
