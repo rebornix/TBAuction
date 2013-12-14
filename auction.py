@@ -10,8 +10,8 @@ if __name__=="__main__":
         userName = ''
         password = ''
         productAddress = ''
-        size = '均码'
-        color = '黑色'
+        size = repr('')
+        color = repr('')
  	
 	#Login        
         args = {
@@ -88,6 +88,7 @@ if __name__=="__main__":
         #Guess what, I find that skuinfo will never be used. What the hell!
 
         #Set product post data
+        print  productProperties[color]
         postData = GeneratePostData(productFormContent, specItemList, productProperties[size], productProperties[color])
         
         #Get order page source code.
@@ -110,7 +111,7 @@ if __name__=="__main__":
 	#Set order post data
         postData = orderPageParser.getOrderPostData()
 
-        reqOrder = urllib2.Request(submitAddress)
+        reqOrder = urllib2.Request("http://buy.taobao.com" + submitAddress)
         reqOrder.add_header('User-agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.861.0 Safari/535.2')
         reqOrder.add_header('Host', 'buy.taobao.com')
         reqOrder.add_header('Referer', "http://buy.taobao.com/auction/buy_now.jhtml")
